@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Travlr Getaways | Travel</title>
+  <link rel="stylesheet" href="/stylesheets/style.css" type="text/css" />
+</head>
+<body>
+  <div id="background">
+    <div id="page">
+      {{> header}}
+
+      <div id="contents">
+        <div class="box">
+          <div class="body">
+
+            <h1>Travel</h1>
+
+            {{!-- step 3: category counts --}}
+            <nav class="categories">
+              <a href="/travel"             class="{{#unless currentCategory}}active{{/unless}}">All</a> |
+              <a href="/travel?category=cruises"
+                 class="{{#if (eq currentCategory 'cruises')}}active{{/if}}">
+                 Cruises ({{cruiseCount}})
+              </a> |
+              <a href="/travel?category=mountains"
+                 class="{{#if (eq currentCategory 'mountains')}}active{{/if}}">
+                 Mountains ({{mountainCount}})
+              </a> |
+              <a href="/travel?category=beaches"
+                 class="{{#if (eq currentCategory 'beaches')}}active{{/if}}">
+                 Beaches ({{beachCount}})
+              </a>
+            </nav>
+
+            {{!-- step 4: search + “Add a Trip” link --}}
+            <form action="/travel" method="get" class="search-form">
+              <input type="hidden" name="category" value="{{currentCategory}}">
+              <input type="text" name="search" placeholder="Search by name…" value="{{searchTerm}}">
+              <button type="submit">Search</button>
+              <a href="/api/trips/new" class="add-trip">Add a Trip</a>
+            </form>
+
+            {{!-- step 5: TABLE of trips --}}
+            <table id="trip-list">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Length</th>
+                  <th>Start</th>
+                  <th>Resort</th>
+                  <th>Per Person</th>
+                  <th>Edit</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each trips}}
+                <tr>
+                  <td>{{this.code}}</td>
+                  <td>
+                    <a href="/api/trips/{{this.code}}">
+                      {{this.name}}
+                    </a>
+                  </td>
+                  <td>{{this.length}}</td>
+                  <td>{{formatDate this.start}}</td>
+                  <td>{{this.resort}}</td>
+                  <td>${{this.perPerson}}</td>
+                  <td>
+                    <a href="/api/trips/{{this.code}}/edit">Edit</a>
+                  </td>
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
+
+            {{!-- step 6: pager --}}
+            <div class="pager">
+              {{#if prevPage}}
+                <a href="/travel?page={{prevPage}}&search={{searchTerm}}&category={{currentCategory}}">
+                  ← Prev
+                </a>
+              {{/if}}
+              {{#if nextPage}}
+                <a href="/travel?page={{nextPage}}&search={{searchTerm}}&category={{currentCategory}}">
+                  Next →
+                </a>
+              {{/if}}
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      {{> footer}}
+			<div>
+				<ul class="navigation">
+					<li>
+						<a href="index.html">Home</a>
+					</li>
+					<li class="active">
+						<a href=“travel.html">Travel</a>
+					</li>
+					<li>
+						<a href="rooms.html">Rooms</a>
+					</li>
+					<li>
+						<a href=“meals.html">Meals</a>
+					</li>
+					<li>
+						<a href="news.html">News</a>
+					</li>
+					<li>
+						<a href="about.html">About</a>
+					</li>
+					<li>
+						<a href="contact.html">Contact</a>
+					</li>
+				</ul>
+				<div id="connect">
+					<a href="http://pinterest.com/fwtemplates/" target="_blank" class="pinterest"></a> <a href="http://freewebsitetemplates.com/go/facebook/" target="_blank" class="facebook"></a> <a href="http://freewebsitetemplates.com/go/twitter/" target="_blank" class="twitter"></a> <a href="http://freewebsitetemplates.com/go/googleplus/" target="_blank" class="googleplus"></a>
+				</div>
+			</div>
+			<p>
+				© 2023 by BHACCASYONIZTAS BEACH RESORT. All Rights Reserved
+			</p>
+		
+	</div>
+</body>
+</html>
