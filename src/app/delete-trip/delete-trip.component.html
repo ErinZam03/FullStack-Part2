@@ -1,0 +1,11 @@
+<!-- src/app/delete-trip/delete-trip.component.html -->
+<div class="alert alert-warning">
+    Are you sure you want to delete trip <strong>{{ code }}</strong>?
+  </div>
+  <button class="btn btn-danger" (click)="confirmDelete()">
+    Yes, delete
+  </button>
+  <a routerLink="/" class="btn btn-secondary">Cancel</a>
+  
+  <!-- Optionally show an error -->
+  <p *ngIf="errorMessage" class="text-danger">{{ errorMessage }}</p>

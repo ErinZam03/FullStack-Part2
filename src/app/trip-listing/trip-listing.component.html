@@ -1,0 +1,70 @@
+<!-- <pre>{{trips | json}}</pre> -->
+<div *ngIf="isLoggedIn()" class="mb-3">
+  <button (click)="addTrip()" class="btn btn-info">Add Trip</button>
+</div>
+
+<!-- category tabs -->
+<nav class="mb-2">
+  <a href="#"
+     [class.active]="!currentCategory"
+     (click)="setCategory(''); $event.preventDefault()">
+    All
+  </a> |
+  <a href="#"
+     [class.active]="currentCategory==='cruises'"
+     (click)="setCategory('cruises'); $event.preventDefault()">
+    Cruises
+  </a> |
+  <a href="#"
+     [class.active]="currentCategory==='mountains'"
+     (click)="setCategory('mountains'); $event.preventDefault()">
+    Mountains
+  </a> |
+  <a href="#"
+     [class.active]="currentCategory==='beaches'"
+     (click)="setCategory('beaches'); $event.preventDefault()">
+    Beaches
+  </a>
+</nav>
+
+<!-- search form -->
+<form class="mb-3" (ngSubmit)="onSearch()">
+  <input
+    [(ngModel)]="searchTerm"
+    name="search"
+    placeholder="Search by name…"
+    class="form-control d-inline-block w-50"
+  />
+  <button class="btn btn-primary ms-2">Search</button>
+</form>
+
+<!-- results table -->
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th><th>Name</th><th>Length</th><th>Start</th>
+      <th>Resort</th><th>Per Person</th>
+      <th *ngIf="isLoggedIn()">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let t of trips">
+      <td>{{ t.code }}</td>
+      <td>{{ t.name }}</td>
+      <td>{{ t.length }}</td>
+      <td>{{ t.start | date:'MMM d, y' }}</td>
+      <td>{{ t.resort }}</td>
+      <td>{{ t.perPerson | currency }}</td>
+      <td *ngIf="isLoggedIn()">
+        <button class="btn btn-sm btn-outline-primary me-2"
+                (click)="editTrip(t.code)">
+          Edit
+        </button>
+        <button class="btn btn-sm btn-outline-danger"
+                (click)="deleteTrip(t.code)">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
